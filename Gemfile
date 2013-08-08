@@ -13,9 +13,12 @@ end
 
 group :test do
 	gem 'capybara'
-	gem 'factory_girl_rails'
+	gem 'faker'
+	gem 'guard-rspec'
+	gem 'launchy'
 end
 
 group :development, :test do
 	gem 'rspec-rails'
+	gem 'factory_girl_rails'
 end

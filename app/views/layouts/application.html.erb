@@ -2,13 +2,28 @@
 <html>
 <head>
   <title>Care247</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  
+  <!-- Importing Twitter Bootstrap and jQuery from CDN's for faster page loading -->
+
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.no-responsive.no-icons.min.css" %>
+
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "http://tinymce.cachefly.net/4.0/tinymce.min.js" %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<div class="container">
+		<%= render 'layouts/header' %>
+		
+		<% flash.each do |name, msg| %>
+			<%= content_tag :div, msg, class: "alert alert-#{name}" %>
+		<% end %>
 
-<%= yield %>
+		<%= yield %>
 
+		<%= render 'layouts/footer' %>
+	</div>
 </body>
 </html>
