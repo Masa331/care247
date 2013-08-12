@@ -8,7 +8,6 @@
 #  city          :string(255)
 #  zip_code      :string(255)
 #  country       :string(255)
-#  ic            :integer
 #  dic           :string(255)
 #  email         :string(255)
 #  password_hash :string(255)
@@ -17,6 +16,7 @@
 #  updated_at    :datetime
 #  phone         :string(255)
 #  admin         :boolean
+#  ic            :string(255)
 #
 
 require 'spec_helper'
@@ -34,8 +34,11 @@ describe User do
 	it "is invalid with bad characters in email" do
 		FactoryGirl.build(:user, email: "rd*/@suk.cz").should_not be_valid
 	end
-	it "is invalid with non-integer characters in phone" do
+	it "is invalid with non-digit characters in phone" do
 		FactoryGirl.build(:user, phone: "dkcdnc").should_not be_valid
+	end
+	it "is invalid with non-digit characters in ic" do
+		FactoryGirl.build(:user, ic: "adikcdn").should_not be_valid
 	end
 	it "is invalid without password" do
 		FactoryGirl.build(:user, password: nil).should_not be_valid

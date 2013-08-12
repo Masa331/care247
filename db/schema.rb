@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130809085303) do
+ActiveRecord::Schema.define(version: 20130812082623) do
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 20130809085303) do
     t.string   "city"
     t.string   "zip_code"
     t.string   "country"
-    t.integer  "ic"
     t.string   "dic"
     t.string   "email"
     t.string   "password_hash"
@@ -28,6 +27,7 @@ ActiveRecord::Schema.define(version: 20130809085303) do
     t.datetime "updated_at"
     t.string   "phone"
     t.boolean  "admin"
+    t.string   "ic"
   end
 
 end

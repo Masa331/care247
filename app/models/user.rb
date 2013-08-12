@@ -8,7 +8,6 @@
 #  city          :string(255)
 #  zip_code      :string(255)
 #  country       :string(255)
-#  ic            :integer
 #  dic           :string(255)
 #  email         :string(255)
 #  password_hash :string(255)
@@ -17,6 +16,7 @@
 #  updated_at    :datetime
 #  phone         :string(255)
 #  admin         :boolean
+#  ic            :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
 	validates :email, presence: true, format:{with: VALID_EMAIL_REGEX}
 	validates :password, presence: true
 	validates :phone, numericality: true
+	validates :ic, numericality: true
 
 	def encrypt_password
 		if password.present?
