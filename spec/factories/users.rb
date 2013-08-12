@@ -11,9 +11,9 @@ FactoryGirl.define do
     country {Faker::Address.country}
     ic {Faker::Number.number 8}
     dic {Faker::Code.isbn 8}
-    phone {Faker::PhoneNumber.phone_number}
+    phone {Faker::Number.digit}
     email {Faker::Internet.email "Petr"}
-    password_hash {Faker::Internet.password}
-    password_salt {Faker::Internet.password}
+    password "foobar"
+    admin false
   end
 end

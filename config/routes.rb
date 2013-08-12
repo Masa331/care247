@@ -1,6 +1,7 @@
 Care247::Application.routes.draw do
   
   root to: "static_pages#home"
+  resources :users
 
   get "static_pages/home"
   get "/pricing", to: "static_pages#pricing"

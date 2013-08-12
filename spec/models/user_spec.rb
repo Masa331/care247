@@ -10,12 +10,13 @@
 #  country       :string(255)
 #  ic            :integer
 #  dic           :string(255)
-#  phone         :integer
 #  email         :string(255)
 #  password_hash :string(255)
 #  password_salt :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
+#  phone         :string(255)
+#  admin         :boolean
 #
 
 require 'spec_helper'
@@ -30,13 +31,18 @@ describe User do
 	it "is invalid without email" do
 		FactoryGirl.build(:user, email: nil).should_not be_valid
 	end
-	it "is invalid with bad characters in email"
-	it "has password hash" do
-		FactoryGirl.build(:user, password_hash: nil).should_not be_valid
+	it "is invalid with bad characters in email" do
+		FactoryGirl.build(:user, email: "rd*/@suk.cz").should_not be_valid
 	end
-	it "has password salt" do
-		FactoryGirl.build(:user, password_salt: nil).should_not be_valid
+	it "is invalid with non-integer characters in phone" do
+		FactoryGirl.build(:user, phone: "dkcdnc").should_not be_valid
 	end
-	it "is invalid with non-integer characters"
-	it "has minimum digits in phone field"
+	it "is invalid without password" do
+		FactoryGirl.build(:user, password: nil).should_not be_valid
+	end
+	it "encrypts password into password_salt and password_hash" do
+		user = FactoryGirl.create(:user, password_salt: nil, password_hash: nil)
+		user.password_salt.should_not == nil
+		user.password_hash.should_not == nil
+	end
 end
