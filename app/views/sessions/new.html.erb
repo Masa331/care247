@@ -1,0 +1,8 @@
+<h1>Prihlaste se</h1>
+<%= form_tag sessions_path do %>
+	<p>Email</p>
+	<%= text_field_tag :email %>
+	<p>Heslo</p>
+	<%= text_field_tag :password %>
+	<%= submit_tag "Prihlasit se", class: "btn" %>
+<% end %>
