@@ -1,9 +1,16 @@
 <div class="header">
 	<ul class="nav nav-pills pull-right">
+		<% if signed_in? %>
+			<li><%= link_to current_user.name, user_path(current_user) %></li>
+			<li><%= link_to "Odhlasit", signout_path, method: "delete" %></li>
+
+			<li><%= link_to "Index", users_path if current_user.admin? %></li>
+		<% else %>
+			<li><%= link_to "Přihlásit se", new_session_url %></strong>
+		<% end %>
 		<li><%= link_to "Domů", root_path %></li>
 		<li><%= link_to "O Care247", about_path %></li>
 		<li><%= link_to "Ceník", pricing_path %></li>
-		<li><%= link_to "Přihlásit se", new_session_url %></strong>
 	</ul>
 	<h3 class="muted">Care247</h3>
 

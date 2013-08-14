@@ -42,7 +42,10 @@ describe UsersController do
 			@user = FactoryGirl.create(:user, name: "Martin")
 		end
 
-		context "with valid id" do
+		context "as correct user" do
+			before :each do
+				sign_in @user
+			end
 			it "finds some record in database" do
 				put :update, id: @user, user: FactoryGirl.attributes_for(:user)
 				assigns[:user].should eq(@user)
@@ -58,100 +61,118 @@ describe UsersController do
 			end
 		end
 
-		context "with invalid id" do
+		context "as wrong user" do
+			before :each do
+				@other_user = FactoryGirl.create(:user)
+				sign_in @other_user
+			end
 			it "doesn't assign anything" do
-				put :update, id: "sdjkcdksadj", user: FactoryGirl.attributes_for(:user, name: "Petr")
+				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				assigns[:user].should eq(nil)
 			end
 			it "renders :home page" do
-				put :update, id: "sdjkcdksadj", user: FactoryGirl.attributes_for(:user, name: "Petr")
+				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				response.should redirect_to root_url
 			end
 		end
 
-		context "as wrong user" do
-			it "doesn't update anything"
+		context "as admin" do
+			it "updates user"
 		end
 	end
 
 	describe "GET #show" do
-		context "with existing record" do
+		context "as correct user" do
+			before :each do
+				@user = FactoryGirl.create(:user)
+				sign_in @user
+			end
 			it "assigns some database record to @user" do
-				user = FactoryGirl.create(:user)
-				get :show, id: user
-				assigns[:user].should eq(user)
+				get :show, id: @user
+				assigns[:user].should eq(@user)
 			end
 			it "renders :show view" do
-				user = FactoryGirl.create(:user)
-				get :show, id: user
+				get :show, id: @user
 				response.should render_template :show
 			end
 		end
 
-		context "with non-existant record" do
+		context "as other user" do
+			before do
+				@user = FactoryGirl.create(:user)
+				@other_user = FactoryGirl.create(:user)
+				sign_in @user
+			end
 			it "renders :home view" do
-				get :show, id: "jknvsdcvn2213"
+				get :show, id: @other_user
 				response.should redirect_to root_url
 			end
-		end
-
-		context "as non-owner user" do
-			it "blahblahblah"
 		end
 	end
 
 	describe "GET #index" do
-		context "signed in as admin user" do
-			before{sign_in_as_admin}
-			xit "assigns database records to @users" do
+		context "as admin user" do
+			before :each do 
+				@admin = FactoryGirl.create(:admin)
+				sign_in @admin
+			end
+			it "assigns database records to @users" do
 				get :index
 				assigns[:users].should eq(User.all)
 			end
-			xit "renders :index view" do
+			it "renders :index view" do
 				get :index
 				response.should render_template :index
 			end
 		end
 
 		context "as non-admin user" do
-			before{sign_in_as_user}
-			xit "doesn't assign anything" do
+			before :each do
+				@user = FactoryGirl.create(:user)
+				sign_in @user
+			end
+			it "doesn't assign anything" do
 				get :index
 				assigns[:users].should eq(nil)
 			end
-			xit "renders users :show view" do
+			it "redirects to root_url" do
 				get :index
-				response.should render_template :show
+				response.should redirect_to root_url
 			end
 		end
 	end
 
 	describe "DELETE #destroy" do
+		
 		before :each do
-			@user = FactoryGirl(:user)
+			@user = FactoryGirl.create(:user)
 		end
+
 		context "signed in as admin user" do
-			before{sign_in_as_admin}
-			xit "finds some user" do
-				delete :destroy, id: @user
-				assigns[:user].should eq(@user)
+			before :each do
+				@admin = FactoryGirl.create(:admin)
+				sign_in @admin
 			end
-			xit "deletes that user" do
+			it "deletes that user" do
 				expect{delete :destroy, id: @user}.to change(User, :count).by(-1)
 			end
-			xit "renders :index view" do
+			it "renders :index view" do
 				delete :destroy, id: @user
-				response.should redirect_to :index
+				response.should redirect_to users_url
 			end
 		end
 
 		context "as non-admin user" do
-			xit "it doesn't delete anything" do
-				expect{delete :destroy, id: "sdcsadsd"}.not_to change(User,:count)
+			before :each do
+				@user2 = FactoryGirl.create(:user)
+				sign_in @user2
 			end
-			xit "renders :home view" do
-				delete :destroy, id: "sdcsadsd"
-				response.shoul redirect_to :index
+			it "it doesn't delete anything" do
+				expect{delete :destroy, id: @user}.not_to change(User,:count)
+			end
+			it "renders :home view" do
+				delete :destroy, id: @user
+				response.should redirect_to root_url
 			end
 		end
 	end

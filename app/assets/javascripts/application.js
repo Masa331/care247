@@ -9,6 +9,8 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+//	VYRESIT FUNKCNI JQUERY Z CDN V PRODUKCI
+//= require jquery
+//= require jquery_ujs
 //= require turbolinks
 //= require_tree .

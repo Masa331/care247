@@ -1,14 +1,21 @@
 Care247::Application.routes.draw do
 
+  get "desks/new"
+  get "desks/create"
+  get "desks/update"
+  get "desks/destroy"
+  get "desks/show"
     root to: "static_pages#home"
     resources :users
-    resources :sessions
+    resources :sessions, only: [:new, :create, :destroy]
 
 
     get "static_pages/home"
     get "/pricing", to: "static_pages#pricing"
     get "/about", to: "static_pages#about"
+    get "/signin", to: "sessions#new"
 
+    match "/signout", to: "sessions#destroy", via: :delete
 
     # The priority is based upon order of creation: first created -> highest priority.
     # See how all your routes lay out with "rake routes".

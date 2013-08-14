@@ -1,1 +1,40 @@
-<p>Ahoj</p>
+<%= render 'eshop_tabs' %>
+<h2>Uzivatelske udaje</h2>
+<div class="row">
+	<div class="span4">
+		<h4>Kontaktni udaje:</h4>
+		<%= form_for @user, url: user_path(@user) do |u| %>
+			<p>Jmeno</p>
+			<%= u.text_field :name, value: @user.name %>
+			<p>Email</p>
+			<%= u.text_field :email, value: @user.email %>
+			<p>Telefon</p>
+			<%= u.text_field :phone, value: @user.phone %>
+			<%= u.submit "Ulozit kontakty" %>
+		<% end %>
+	</div>
+	<div class="span4">
+		<h4>Fakturacni udaje:</h4>
+		<%= form_for @user, url: user_path(@user) do |u| %>
+			<P>IC</P>
+			<%= u.text_field :ic, value: @user.ic %>
+			<P>DIC</P>
+			<%= u.text_field :dic, value: @user.dic %>
+			<%= u.submit "Ulozit fakturacni udaje" %>
+		<% end %>
+	</div>
+	<div class="span4">
+		<h4>Adresa:</h4>
+		<%= form_for @user, url: user_path(@user) do |u| %>
+			<P>Ulice</P>
+			<%= u.text_field :street, value: @user.street %>
+			<p>Mesto</p>
+			<%= u.text_field :city, value: @user.city %>
+			<p>PSC</p>
+			<%= u.text_field :ic, value: @user.ic %>
+			<p>DIC</p>
+			<%= u.text_field :dic, value: @user.dic %>
+			<%= u.submit "Ulozit fakturacni udaje" %>
+		<% end %>
+	</div>
+</div>
