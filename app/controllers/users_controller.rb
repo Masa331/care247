@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user].permit(:name, :email, :password))
 		if @user.save
-			redirect_to user_url
+			redirect_to @user
 			flash[:success] = "Byl jste uspesne zaregistrovan"
 			# session things
 			# ..
@@ -18,10 +18,28 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		if @user = User.find(params[:id])
+		# I'm using "find_by_id" beause simple "find" it returns error RecordNotFound and doesn't execute the if-else when queriing qith non-existant id 
+		if @user = User.find_by_id(params[:id])
 			render :show
 		else
-			render :home
+			redirect_to root_url
 		end
+	end
+
+	def update
+		# "find_by_id" - stejne jako u show
+		if @user = User.find_by_id(params[:id])
+			@user.update_attributes(params[:user].permit(:name, :email, :street, :city, :zip_code, :country, :dic, :ic, :phone))
+			flash[:success] = "Uspesne jste upravil udaje"
+			redirect_to @user
+		else
+			redirect_to root_url
+		end
+	end
+
+	def index
+	end
+
+	def destroy
 	end
 end

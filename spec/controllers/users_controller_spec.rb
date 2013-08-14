@@ -21,48 +21,51 @@ describe UsersController do
 			end
 			it "renders :show view" do
 				post :create, user: FactoryGirl.attributes_for(:whitelist) 
-				response.should render_template('show')
+				response.should redirect_to User.last
 			end
 		end
 
 		context "with invalid input" do
 			it "doesn't save form input in database" do
-				expect{post :create, user: FactoryGirl.attributes_for(:non_whitelist)}.to_not change(User, :count)
+				expect{post :create, user: FactoryGirl.attributes_for(:non_whitelist)}.not_to change(User, :count)
 			end
 			it "renders :new view" do
 				post :create, user: FactoryGirl.attributes_for(:non_whitelist)
-				response.should render_template('new')
+				response.should render_template :new
 			end
 		end
 	end
 
 	describe "PUT #update" do
+		
 		before :each do
-			@user = FactoryGirl(:user, name = "Martin")
+			@user = FactoryGirl.create(:user, name: "Martin")
+		end
+
 		context "with valid id" do
-			xit "finds some record in database"
-				put :update, id: @user
+			it "finds some record in database" do
+				put :update, id: @user, user: FactoryGirl.attributes_for(:user)
 				assigns[:user].should eq(@user)
 			end
-			xit "updates that record" do
-				put :update, id: @user, name: "Petr"
+			it "updates that record" do
+				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				@user.reload
 				@user.name.should eq("Petr")
 			end
-			xit "renders :show view" do
-				put :update, id: @user
+			it "redirect to users show view" do
+				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				response.should redirect_to @user
 			end
 		end
 
 		context "with invalid id" do
-			xit "doesn't assign anything" do
-				put :update, id: "sdjkcdksadj"
+			it "doesn't assign anything" do
+				put :update, id: "sdjkcdksadj", user: FactoryGirl.attributes_for(:user, name: "Petr")
 				assigns[:user].should eq(nil)
 			end
-			xit "renders some page" do
-				put :update, id: "sdjkcdksadj"
-				response.should redirect_to :home
+			it "renders :home page" do
+				put :update, id: "sdjkcdksadj", user: FactoryGirl.attributes_for(:user, name: "Petr")
+				response.should redirect_to root_url
 			end
 		end
 
@@ -73,25 +76,22 @@ describe UsersController do
 
 	describe "GET #show" do
 		context "with existing record" do
-			xit "assigns some database record to @user" do
-				user = FactoryGirl(:user)
+			it "assigns some database record to @user" do
+				user = FactoryGirl.create(:user)
 				get :show, id: user
 				assigns[:user].should eq(user)
 			end
-			xit "renders :show view" do
-				get :show, id: FactoryGirl(:user)
+			it "renders :show view" do
+				user = FactoryGirl.create(:user)
+				get :show, id: user
 				response.should render_template :show
 			end
 		end
 
 		context "with non-existant record" do
-			xit "it doesn't assign anything" do
-				get :show, id: "dacacsad"
-				assigns[:user].should eq(nil)
-			end
-			xit "renders some page" do
-				get :show, id: "dacacsad"
-				response.should render_template :fail
+			it "renders :home view" do
+				get :show, id: "jknvsdcvn2213"
+				response.should redirect_to root_url
 			end
 		end
 
@@ -126,7 +126,7 @@ describe UsersController do
 		end
 	end
 
-	describe "POST #delete" do
+	describe "DELETE #destroy" do
 		before :each do
 			@user = FactoryGirl(:user)
 		end
