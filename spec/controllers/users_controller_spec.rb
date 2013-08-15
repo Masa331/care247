@@ -36,7 +36,7 @@ describe UsersController do
 		end
 	end
 
-	describe "PUT #update" do
+	describe "PATCH #update" do
 		
 		before :each do
 			@user = FactoryGirl.create(:user, name: "Martin")
@@ -47,16 +47,16 @@ describe UsersController do
 				sign_in @user
 			end
 			it "finds some record in database" do
-				put :update, id: @user, user: FactoryGirl.attributes_for(:user)
+				patch :update, id: @user, user: FactoryGirl.attributes_for(:user)
 				assigns[:user].should eq(@user)
 			end
 			it "updates that record" do
-				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
+				patch :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				@user.reload
 				@user.name.should eq("Petr")
 			end
 			it "redirect to users show view" do
-				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
+				patch :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				response.should redirect_to @user
 			end
 		end
@@ -67,11 +67,11 @@ describe UsersController do
 				sign_in @other_user
 			end
 			it "doesn't assign anything" do
-				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
+				patch :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				assigns[:user].should eq(nil)
 			end
 			it "renders :home page" do
-				put :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
+				patch :update, id: @user, user: FactoryGirl.attributes_for(:user, name: "Petr")
 				response.should redirect_to root_url
 			end
 		end

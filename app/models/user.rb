@@ -22,6 +22,8 @@
 
 class User < ActiveRecord::Base
 
+	has_many :desks, dependent: :destroy
+
 	# Regexp for email format validation. Only emails with numbers, letters, "-" and "." pass
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	# Variable for saving users input from form and then creating password_hash and password_salt from it. Not saved to database.

@@ -24,6 +24,7 @@ class UsersController < ApplicationController
 	def show
 		# I'm using "find_by_id" beause simple "find" it returns error RecordNotFound and doesn't execute the if-else when queriing qith non-existant id 
 		if @user = User.find_by_id(params[:id])
+			@desks = @user.desks.all
 			render :show
 		else
 			redirect_to root_url

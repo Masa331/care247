@@ -6,7 +6,11 @@ Care247::Application.routes.draw do
   get "desks/destroy"
   get "desks/show"
     root to: "static_pages#home"
-    resources :users
+    resources :users do
+        resources :desks, only: [:new, :create]
+    end
+
+    resources :desks, only: [:show, :update, :destroy]
     resources :sessions, only: [:new, :create, :destroy]
 
 

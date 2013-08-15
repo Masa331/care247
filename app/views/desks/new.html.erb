@@ -1,2 +1,7 @@
-<h1>Desks#new</h1>
-<p>Find me in app/views/desks/new.html.erb</p>
+<h1>Vytvoreni nove podpory</h1>
+
+<%= form_for @desk, url: user_desks_path do |d| %>
+	<p>Nazev:</p>
+	<%= d.text_field :name %>
+	<%= d.submit "Vytvorit podporu", class: "btn" %>
+<% end %>

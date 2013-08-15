@@ -11,14 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130814191159) do
+ActiveRecord::Schema.define(version: 20130815102624) do
 
   create_table "desks", force: true do |t|
-    t.string   "name"
+    t.string   "name",                            null: false
     t.string   "notificate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "resolved_requests",   default: 0
+    t.integer  "unresolved_requests", default: 0
+    t.integer  "user_id",                         null: false
   end
+
+  add_index "desks", ["user_id"], name: "index_desks_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"

@@ -1,0 +1,1 @@
+Mail helpdesk. Rails learning app. Free to use for learning purposes or other non-commercial use.
