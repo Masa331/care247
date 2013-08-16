@@ -1,6 +1,6 @@
 Care247::Application.routes.draw do
 
-    mount_griddler
+    post '/email_processor' => 'EmailProcessor#process'
 
     get "desks/new"
     get "desks/create"
