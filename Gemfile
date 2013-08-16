@@ -8,6 +8,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'turbolinks'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'griddler'
+gem 'jquery-rails'
 
 group :development do
 	gem 'annotate'
@@ -30,5 +31,4 @@ group :development, :test do
 	gem 'sqlite3'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-	gem 'jquery-rails'
 end
