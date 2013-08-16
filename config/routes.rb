@@ -1,6 +1,5 @@
 Care247::Application.routes.draw do
 
-    post '/email_processor' => 'EmailProcessor#process'
 
     get "desks/new"
     get "desks/create"
