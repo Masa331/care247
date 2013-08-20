@@ -34,4 +34,7 @@ describe Desk do
 		desk = FactoryGirl.create(:desk)
 		desk.should belong_to(:user)
 	end
+	it "has many requests" do
+		should have_many(:requests)
+	end
 end

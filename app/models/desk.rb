@@ -15,6 +15,8 @@
 class Desk < ActiveRecord::Base
 
 	belongs_to :user
+	has_many :requests
+	
 	validates :name, presence: true
 	validates :user_id, presence: true
 	validates_numericality_of :resolved_requests, greater_than: -1

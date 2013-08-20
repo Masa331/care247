@@ -47,6 +47,9 @@ describe User do
 		user = FactoryGirl.create(:user)
 		user.remember_token.should_not == nil
 	end
+	it "has many desks" do
+		should have_many(:desks)
+	end
 
 	describe "authenticate method" do
 		before :each do
@@ -74,4 +77,6 @@ describe User do
 			@same_email_user.should_not be_valid
 		end
 	end
+
+
 end

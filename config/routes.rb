@@ -1,5 +1,9 @@
 Care247::Application.routes.draw do
 
+    get "requests/show"
+    get "requests/index"
+    get "requests/update"
+    get "requests/destroy"
 
     get "desks/new"
     get "desks/create"
