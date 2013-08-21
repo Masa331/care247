@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130820175628) do
+ActiveRecord::Schema.define(version: 20130821181041) do
 
   create_table "desks", force: true do |t|
     t.string   "name",                            null: false
@@ -21,20 +21,31 @@ ActiveRecord::Schema.define(version: 20130820175628) do
     t.integer  "resolved_requests",   default: 0
     t.integer  "unresolved_requests", default: 0
     t.integer  "user_id",                         null: false
+    t.string   "desks_mailbox"
   end
 
+  add_index "desks", ["desks_mailbox"], name: "index_desks_on_desks_mailbox"
   add_index "desks", ["user_id"], name: "index_desks_on_user_id"
+
+  create_table "parts", force: true do |t|
+    t.string   "request_id", null: false
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_id"
+  end
+
+  add_index "parts", ["request_id"], name: "index_parts_on_request_id"
 
   create_table "requests", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "desk_id",     null: false
-    t.string   "status_flag", null: false
-    t.string   "subject",     null: false
-    t.string   "to",          null: false
-    t.string   "from",        null: false
-    t.string   "request_id",  null: false
-    t.text     "body"
+    t.string   "desk_id",                 null: false
+    t.integer  "status_flag", limit: 255, null: false
+    t.string   "subject",                 null: false
+    t.string   "to",                      null: false
+    t.string   "from",                    null: false
+    t.string   "user_id"
   end
 
   add_index "requests", ["desk_id"], name: "index_requests_on_desk_id"

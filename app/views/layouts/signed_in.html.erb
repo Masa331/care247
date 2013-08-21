@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Care247</title>
+
+	<!-- Importing Twitter Bootstrap and jQuery from CDN's for faster page loading -->
+
+	<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+	<%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.no-responsive.no-icons.min.css" %>
+
+	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+	<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"%>
+
+	<%= csrf_meta_tags %>
+</head>
+<body>
+	<div class="container">
+		<%= render 'layouts/header' %>
+		
+		<%= render 'users/eshop_tabs' %>
+		
+		<% flash.each do |name, msg| %>
+			<%= content_tag :div, msg, class: "alert alert-#{name}" %>
+		<% end %>
+
+		<%= yield %>
+
+		<%= render 'layouts/footer' %>
+	</div>
+</body>
+</html>

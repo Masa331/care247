@@ -71,7 +71,7 @@ describe DesksController do
             before :each do
                 sign_in @user
             end
-            it "updates the record record" do
+            it "updates the right record" do
                 patch :update, id: @desk, desk: FactoryGirl.attributes_for(:desk, name: "Obchod")
                 @desk.reload
                 @desk.name.should eq("Obchod")
@@ -98,7 +98,7 @@ describe DesksController do
         end
     end
 
-    describe "GET 'destroy'" do
+    describe "DELETE 'destroy'" do
         before :each do
             @user = FactoryGirl.create(:user)
             @desk = FactoryGirl.create(:desk, user_id: @user.id)
@@ -147,6 +147,22 @@ describe DesksController do
             it "renders :show view" do
                 get :show, id: @desk
                 response.should render_template :show
+            end
+            describe "assigns proper request records to" do
+                before :each do
+                    @resolved_request = FactoryGirl.create(:request, status_flag: 1, desk_id: @desk.id)
+                    @unresolved_request = FactoryGirl.create(:request, status_flag: 0, desk_id: @desk.id)
+                end
+                it "assigns correct request records to @resolved_requests" do
+                    get :show, id: @desk
+                    assigns(:resolved_requests).should include(@resolved_request)
+                    assigns(:resolved_requests).should_not include(@unresolved_request)
+                end
+                it "assigns correct request record to @unresolved_requests" do
+                    get :show, id: @desk
+                    assigns(:unresolved_requests).should include(@unresolved_request)
+                    assigns(:unresolved_requests).should_not include(@resolved_request)
+                end
             end
         end
         context "as other user" do

@@ -10,6 +10,7 @@
 #  resolved_requests   :integer          default(0)
 #  unresolved_requests :integer          default(0)
 #  user_id             :integer          not null
+#  desks_mailbox       :string(255)
 #
 
 require 'spec_helper'

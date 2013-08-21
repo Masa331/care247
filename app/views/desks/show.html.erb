@@ -1,15 +1,42 @@
 <div class="row">
-	<div class="span6">
-		<%= form_for @desk do |d| %>
-			<p>Nazev podpory:</p>
-			<%= d.text_field :name %>
-			<p>Upozornovat:</p>
-			<%= d.text_field :notificate %>
-			<%= d.submit "Ulozit udaje" %>
-		<% end %>
-		<%= link_to "Smazat podporu", desk_path(@desk), method: "delete" %>
-	</div>
-	<div class="span6">
-		<h1>Statistiky:</h1>
+	<div class="span12">
+		<h2>Podpora <%= @desk.name %></h2>
+		<h3>Nevyřízené tickety</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>Cislo ticketu</th>
+				<th>Predmet</th>
+				<th>Odesilatel</th>
+				<th>Prijato</th>
+			</tr>
+			<% @unresolved_requests.each do |r| %>
+				<tr>
+					<td><%= r.id %></td>
+					<td><%= r.subject %></td>
+					<td><%= r.from %></td>
+					<td><%= r.created_at %></td>
+				</tr>
+			<% end %>
+		</table>
+		<h3>Vyřízené tickety</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>Cislo ticketu</th>
+				<th>Predmet</th>
+				<th>Odesilatel</th>
+				<th>Prijato</th>
+			</tr>
+			<% @resolved_requests.each do |r| %>
+				<tr>
+					<td><%= r.id %></td>
+					<td><%= r.subject %></td>
+					<td><%= r.from %></td>
+					<td><%= r.created_at %></td>
+				</tr>
+			<% end %>
+		</table>
+		<h3>Vyřízené tickety</h3>
 	</div>
 </div>
+
+<%= link_to "Upravit podporu", edit_desk_path(@desk) %>

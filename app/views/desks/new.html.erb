@@ -1,7 +1,12 @@
-<h1>Vytvoreni nove podpory</h1>
+<h1>Vytvoření nové podpory</h1>
 
 <%= form_for @desk, url: user_desks_path do |d| %>
-	<p>Nazev:</p>
+	<%= d.label :Název %>
 	<%= d.text_field :name %>
-	<%= d.submit "Vytvorit podporu", class: "btn" %>
+	<%= d.label :Email %>
+	<%= d.text_field :desks_mailbox %>
+	<%= d.label :Upozorňovat %>
+	<%= d.text_field :notificate %>
+	<br>
+	<%= d.submit "Vytvořit podporu", class: "btn btn-success" %>
 <% end %>

@@ -15,9 +15,6 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
 
-  # LINE ADDED FOR AUTOLOAD ALL SPECS WITH _spec.rb ENDING. ADDED COS MY REQUEST SPECS WERENT LOADING WITH COMMAND rspec spec/
-  config.pattern = "**/*_spec.rb"
-  
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

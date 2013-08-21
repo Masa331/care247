@@ -1,10 +1,5 @@
 Care247::Application.routes.draw do
 
-    get "requests/show"
-    get "requests/index"
-    get "requests/update"
-    get "requests/destroy"
-
     get "desks/new"
     get "desks/create"
     get "desks/update"
@@ -18,12 +13,14 @@ Care247::Application.routes.draw do
 
     resources :desks, only: [:show, :update, :destroy]
     resources :sessions, only: [:new, :create, :destroy]
+    resources :requests, only: [:show, :update, :destroy]
 
 
     get "static_pages/home"
     get "/pricing", to: "static_pages#pricing"
     get "/about", to: "static_pages#about"
     get "/signin", to: "sessions#new"
+    get "/edit_desk/:id", to: "desks#edit", as: :edit_desk
 
     match "/signout", to: "sessions#destroy", via: :delete
 end

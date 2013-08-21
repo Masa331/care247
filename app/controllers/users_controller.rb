@@ -3,6 +3,8 @@ class UsersController < ApplicationController
 	before_filter :admin_user, only: [:index, :destroy]
 	before_filter :correct_user, only: [:show, :update]
 
+	layout "signed_in", only: [:show]
+
 	def new
 		@user = User.new
 	end
