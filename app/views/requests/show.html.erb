@@ -1,1 +1,16 @@
-<%= @request.subject %>
+Predmet: <%= @request.subject %>
+<br>
+Prijato: <%= @request.created_at %>
+<br>
+Odesilatel: <%= @request.from %>
+<br>
+Adresat: <%= @request.to %>
+
+<br>
+
+<% settle_parts(@parts).each do |p| %>
+	<br>
+	<%= p.created_at %>
+	<br>
+	<%= p.body %>	
+<% end %>

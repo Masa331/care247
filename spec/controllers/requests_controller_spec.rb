@@ -7,6 +7,9 @@ describe RequestsController do
 		@other_user = FactoryGirl.create(:user)
 		@desk = FactoryGirl.create(:desk, user_id: @user.id)
 		@req = FactoryGirl.create(:request, desk_id: @desk.id, status_flag: 0)
+		@part1 = FactoryGirl.create(:part, request_id: @req.id, user_id: @user.id)
+		@part2 = FactoryGirl.create(:part, request_id: @req.id, user_id: @user.id, body: "djkcahjs sah sasb sashbh assahjg. Skkssnjkn. sdcakjsjsxnas xcajka ACLJBD ")
+		@part3 = FactoryGirl.create(:part, request_id: "345", user_id: @other_user.id, body: "Tohle nechci videt!")
 	end
 
 	describe "GET :show" do
@@ -18,7 +21,11 @@ describe RequestsController do
 				get :show, id: @req
 				assigns[:request].should eq(@req)
 			end
-			it "assigns all apropriate parts to @parts"
+			it "assigns all apropriate parts to @parts" do
+				get :show, id: @req
+				assigns[:parts].should include(@part1, @part2)
+				assigns[:parts].should_not include(@part3)
+			end
 			it "renders :show view" do
 				get :show, id: @req
 				response.should render_template :show
@@ -32,7 +39,10 @@ describe RequestsController do
 				get :show, id: @req
 				assigns[:request].should eq(nil)
 			end
-			it "doesn't assign anything to @parts"
+			it "doesn't assign anything to @parts" do
+				get :show, id: @req
+				assigns[:parts].should eq(nil)
+			end
 			it "redirects to :root" do
 				get :show, id: @req
 				response.should redirect_to root_url
@@ -45,27 +55,27 @@ describe RequestsController do
 			before :each do
 				sign_in @user
 			end
-			xit "updates right record" do
-				patch :update, id: @request, request: FactoryGirl.attributes_for(:request, status_flag: 1)
-				@request.reload
-				@request.status_flag.should eq(1)
+			it "updates right record" do
+				patch :update, id: @req, request: FactoryGirl.attributes_for(:request, status_flag: 1)
+				@req.reload
+				@req.status_flag.should eq(1)
 			end
-			xit "redirects to desks/show" do
-				patch :update, id: @request, request: FactoryGirl.attributes_for(:request, status_flag: 1)
-				response.should redirect_to desk_url, id: @desk
+			it "redirects to desks/show" do
+				patch :update, id: @req, request: FactoryGirl.attributes_for(:request, status_flag: 1)
+				response.should redirect_to desk_url(@desk)
 			end
 		end
 		context "as other user" do
 			before :each do
 				sign_in @other_user
 			end
-			xit "doesn't assign anything to @request" do
-				patch :update, id: @request, request: FactoryGirl.attributes_for(:request, status_flag: 1)
-				@request.reload
-				@request.status_flag.should eq(0)
+			it "doesn't assign anything to @request" do
+				patch :update, id: @req, request: FactoryGirl.attributes_for(:request, status_flag: 1)
+				@req.reload
+				@req.status_flag.should eq(0)
 			end
-			xit "redirects to :root" do
-				patch :update, id: @request, request: FactoryGirl.attributes_for(:request, status_flag: 1)
+			it "redirects to :root" do
+				patch :update, id: @req, request: FactoryGirl.attributes_for(:request, status_flag: 1)
 				response.should redirect_to root_url
 			end
 		end
@@ -76,24 +86,24 @@ describe RequestsController do
 			before :each do
 				sign_in @user
 			end
-			xit "destroys record in database" do
-				expect{delete :destroy, id: @request}.to change(Request, :count).by(-1)
+			it "destroys record in database" do
+				expect{delete :destroy, id: @req}.to change(Request, :count).by(-1)
 			end
 
-			xit "redirects to desks/show" do
-				delete :destroy, id: @request
-				response.should redirect_to desk_url, id: @desk
+			it "redirects to desks/show" do
+				delete :destroy, id: @req
+				response.should redirect_to desk_url(@desk)
 			end
 		end
 		context "as other user" do
 			before :each do
 				sign_in @other_user
 			end
-			xit "doesn't assign anything" do
-				expect{delete :destroy, id: @request}.not_to change(Request, :count)
+			it "doesn't assign anything" do
+				expect{delete :destroy, id: @req}.not_to change(Request, :count)
 			end
-			xit "redirects to :root" do
-				delete :destory, id: @request
+			it "redirects to :root" do
+				delete :destroy, id: @req
 				response.should redirect_to root_url
 			end
 		end

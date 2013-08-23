@@ -9,13 +9,28 @@ class RequestsController < ApplicationController
 
 	def show
 		@request = Request.find(params[:id])
+		@parts = @request.parts
 		render :show
 	end
 
 	def update
+		@request = Request.find(params[:id])
+		if @request.update_attributes(params[:request].permit(:status_flag))
+			redirect_to desk_url(@request.desk_id)
+		else
+			flash[:error] = "Neco se pokazilo"
+			redirect_to desk_url(@request.desk_id)
+		end
 	end
 
 	def destroy
+		desk_id = Request.find(params[:id]).desk_id
+		if Request.find(params[:id]).destroy
+			redirect_to desk_url(desk_id)
+		else
+			flash[:error] = "Neco se pokazilo"
+			redirect_to desk_url(desk_id)
+		end
 	end
 
 	private
