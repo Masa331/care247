@@ -17,6 +17,8 @@ class Desk < ActiveRecord::Base
 
 	belongs_to :user
 	has_many :requests, dependent: :destroy
+
+	# attr_reader :id
 	
 	validates :name, presence: true
 	validates :user_id, presence: true
