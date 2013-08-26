@@ -1,0 +1,42 @@
+<div class="row">
+	<div class="span12">
+		<h3>Nevyřízené tickety</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>Předmět</th>
+				<th>Číslo ticketu</th>
+				<th>Odesílatel</th>
+				<th>Přijato - Doba od přijetí</th>
+				<th>Smazat</th>
+			</tr>
+			<% @all_unresolved_requests.each do |r| %>
+				<tr>
+					<td><%= link_to r.subject, request_url(r.id) %></td>
+					<td><%= r.id %></td>
+					<td><%= r.from %></td>
+					<td><%= r.created_at %></td>
+					<td><%= link_to "X", request_url(r.id), method: "delete" %></td>
+				</tr>
+			<% end %>
+		</table>
+		<h3>Vyřízené tickety</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th>Předmět</th>
+				<th>Číslo ticketu</th>
+				<th>Odesílatel</th>
+				<th>Přijato - Doba od přijetí</th>
+				<th>Smazat</th>
+			</tr>
+			<% @all_resolved_requests.each do |r| %>
+				<tr>
+					<td><%= link_to r.subject, request_url(r.id) %></td>
+					<td><%= r.id %></td>
+					<td><%= r.from %></td>
+					<td><%= r.created_at %></td>
+					<td><%= link_to "X", request_url(r.id), method: "delete" %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>
