@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821181041) do
+ActiveRecord::Schema.define(version: 20130824090615) do
 
   create_table "desks", force: true do |t|
     t.string   "name",                            null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20130821181041) do
     t.string   "desk_id",                 null: false
     t.integer  "status_flag", limit: 255, null: false
     t.string   "subject",                 null: false
-    t.string   "to",                      null: false
+    t.text     "to",          limit: 255, null: false
     t.string   "from",                    null: false
     t.string   "user_id"
   end

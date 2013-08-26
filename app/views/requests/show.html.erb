@@ -1,12 +1,18 @@
-Predmet: <%= @request.subject %>
-<br>
-Prijato: <%= @request.created_at %>
-<br>
-Odesilatel: <%= @request.from %>
-<br>
-Adresat: <%= @request.to %>
+<table class="table table-bordered">
+	<tr>
+		<th>Předmět</th>
+		<th>Číslo ticketu</th>
+		<th>Odesílatel</th>
+		<th>Přijato - Doba od přijetí</th>
+	</tr>
 
-<br>
+	<tr>
+		<td><%= @request.subject %></td>
+		<td><%= @request.id %></td>
+		<td><%= @request.from %></td>
+		<td><%= @request.created_at.to_formatted_s :czech_time_date %>  <%= (Time.zone.now - @request.created_at).to_formatted_s :czech_time_date %></td>
+	</tr>
+</table>
 
 <% settle_parts(@parts).each do |p| %>
 	<br>

@@ -13,7 +13,7 @@ Care247::Application.routes.draw do
 
     resources :desks, only: [:show, :update, :destroy]
     resources :sessions, only: [:new, :create, :destroy]
-    resources :requests, only: [:show, :update, :destroy]
+    resources :requests, only: [:show, :update, :destroy, :index]
 
 
     get "static_pages/home"

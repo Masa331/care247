@@ -13,6 +13,12 @@ class RequestsController < ApplicationController
 		render :show
 	end
 
+	def index
+		@all_resolved_requests = Request.all_resolved_requests current_user.id
+		@all_unresolved_requests = Request.all_unresolved_requests current_user.id
+		render :index
+	end
+
 	def update
 		@request = Request.find(params[:id])
 		if @request.update_attributes(params[:request].permit(:status_flag))

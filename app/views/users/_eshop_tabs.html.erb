@@ -1,10 +1,11 @@
 <div class="navbar">
-	<div class="navbar-inner">
+	<div class="navbar-inner" id="desk-tabs">
 		<ul class="nav">
+			<li><%= link_to "Všechny tickety", requests_path %></li>
 			<% current_users_desks.each do |d| %>
 				<li><%= link_to d.name, desk_url(d) %></li>
 			<% end %>
-			<li><%= link_to "Zalozit novou podporu", new_user_desk_url(current_user.id) %></li>
+			<li class="li-pull-right"><%= link_to "Zalozit novou podporu", new_user_desk_url(current_user.id) %></li>
 		</ul>
 	</div>
 </div>

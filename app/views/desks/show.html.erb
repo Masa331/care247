@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="span12">
-		<h2>Podpora <%= @desk.name %></h2>
-		<h3>Nevyřízené tickety</h3>
+		<h2 class="inline-h"><%= @desk.name %></h2> <%= link_to "Upravit podporu", edit_desk_path(@desk) %>
+		<h4 class="bottom-bordered">Nevyřízené tickety</h4>
 		<table class="table table-bordered">
 			<tr>
-				<th>Predmet</th>
-				<th>Cislo ticketu</th>
-				<th>Odesilatel</th>
-				<th>Prijato</th>
+				<th>Předmět</th>
+				<th>Číslo ticketu</th>
+				<th>Odesílatel</th>
+				<th>Přijato - Doba od přijetí</th>
 				<th>Smazat</th>
 			</tr>
 			<% @unresolved_requests.each do |r| %>
@@ -15,18 +15,18 @@
 					<td><%= link_to r.subject, request_url(r.id) %></td>
 					<td><%= r.id %></td>
 					<td><%= r.from %></td>
-					<td><%= r.created_at %></td>
+					<td><%= r.created_at.to_formatted_s :czech_time_date %>  <%= (Time.zone.now - r.created_at).to_formatted_s :czech_time_date %></td>
 					<td><%= link_to "X", request_url(r.id), method: "delete" %></td>
 				</tr>
 			<% end %>
 		</table>
-		<h3>Vyřízené tickety</h3>
+		<h4 class="bottom-bordered">Vyřízené tickety</h4>
 		<table class="table table-bordered">
 			<tr>
-				<th>Predmet</th>
-				<th>Cislo ticketu</th>
-				<th>Odesilatel</th>
-				<th>Prijato</th>
+				<th>Předmět</th>
+				<th>Číslo ticketu</th>
+				<th>Odesílatel</th>
+				<th>Přijato - Doba od přijetí</th>
 				<th>Smazat</th>
 			</tr>
 			<% @resolved_requests.each do |r| %>
@@ -42,5 +42,3 @@
 		</table>
 	</div>
 </div>
-
-<%= link_to "Upravit podporu", edit_desk_path(@desk) %>

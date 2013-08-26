@@ -50,6 +50,56 @@ describe RequestsController do
 		end
 	end
 
+	describe "GET :index" do
+		before :each do
+			@req1 = FactoryGirl.create(:request, user_id:@user.id)
+			@req2 = FactoryGirl.create(:request, user_id:@user.id, status_flag: 1)
+			@other_users_req = FactoryGirl.create(:request, user_id:@other_user.id)
+		end
+		context "as some user" do
+			before :each do
+				sign_in @user
+			end
+			it "assigns right records to all_resolved_requests" do
+				get :index
+				assigns[:all_resolved_requests].should include(@req2)
+			end
+			it "assigns right records to all_unresolved_requests" do
+				get :index
+				assigns[:all_unresolved_requests].should include(@req1)
+			end
+			it "doesn't assign other users records" do
+				get :index
+				assigns[:all_resolved_requests].should_not include(@other_users_req)
+			end
+			it "renders :index view" do
+				get :index
+				response.should render_template :index
+			end
+		end
+		context "as other user" do
+			before :each do
+				sign_in @other_user
+			end
+			it "assigns right records to all_resolved_requests" do
+				get :index
+				assigns[:all_resolved_requests].should eq([])
+			end
+			it "assigns right records to all_unresolved_requests" do
+				get :index
+				assigns[:all_unresolved_requests].should include(@other_users_req)
+			end
+			it "doesn't assign other users records" do
+				get :index
+				assigns[:all_resolved_requests].should_not include(@req1, @req2)
+			end
+			it "renders :index view" do
+				get :index
+				response.should render_template :index
+			end
+		end
+	end
+
 	describe "PATCH :update" do
 		context "as correct user" do
 			before :each do

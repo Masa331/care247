@@ -4,7 +4,7 @@ FactoryGirl.define do
         # Assumes Griddler.configure.to is :hash (default)
         to [{ full: 'podpora@seznam.cz', email: 'to_user@email.com', token: 'to_user', host: 'email.com', name: nil }]
         from 'user@email.com'
-        subject 'email subject'
+        subject 'dooba dodani ## 1'
         body 'Hello!'
         attachments {[]}
 

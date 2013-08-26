@@ -38,4 +38,38 @@ describe Desk do
 	it "has many requests" do
 		should have_many(:requests)
 	end
+
+	describe "method resolved_requests" do
+		before :each do
+			@desk = FactoryGirl.create(:desk)
+			@req1 = FactoryGirl.create(:request, desk_id:@desk.id)
+			@req2 = FactoryGirl.create(:request, desk_id:@desk.id)
+			@req3 = FactoryGirl.create(:request, desk_id:@desk.id, status_flag: 1)
+		end
+		it "returns resolved requests" do
+			resolved =  @desk.resolved_requests
+			resolved.should include(@req3)
+		end
+		it "doesn't return anything else" do
+			resolved = @desk.resolved_requests
+			resolved.should_not include(@req1, @req2)
+		end
+	end
+
+	describe "method unresolved_requests" do
+		before :each do
+			@desk = FactoryGirl.create(:desk)
+			@req1 = FactoryGirl.create(:request, desk_id:@desk.id)
+			@req2 = FactoryGirl.create(:request, desk_id:@desk.id)
+			@req3 = FactoryGirl.create(:request, desk_id:@desk.id, status_flag: 1)
+		end
+		it "returns unresolved requests" do
+			unresolved =  @desk.unresolved_requests
+			unresolved.should include(@req1, @req2)
+		end
+		it "doesn't return anything else" do
+			unresolved = @desk.unresolved_requests
+			unresolved.should_not include(@req3)
+		end
+	end
 end

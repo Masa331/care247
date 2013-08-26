@@ -15,31 +15,37 @@
 		module_function
 
 		def process(email)
-			#if req_id = extract_request_id(email.subject)
-			#	append_to_request(req_id , email.body)
-			#else
-			#	new_request(email)
-			#end
-			new_request(email)
+			if req_id = extract_request_id(email[:subject])
+				create_part(req_id,Request.find(req_id.to_i).id, email[:body])
+			else
+				new_request(email)
+			end
 		end
 
 		def extract_request_id(subject)
-			nil
+			req_id = subject.slice /(?<=##)\d+|(?<=##\s)\d+/
 		end
 
 		def find_desk(mailboxes)
 			mailboxes.each do |m|
-				if desk = Desk.where(desks_mailbox: m)
-			binding.pry
-					
-					desk.id
+				if desk = Desk.find_by(desks_mailbox: m)
+					return desk.id
 				end
 			end
 		end
 
-		def append_to_request(request_id, email_body)
-			nil
-		#	Part.create(request_id: request_id, body: email_body, user_id:)
+		def find_user(desk_id)
+			Desk.find(desk_id).user_id
+		end
+
+		def create_part(request_id, user_id, email_body)
+			part = Part.new
+
+			part.request_id = request_id
+			part.user_id = user_id
+			part.body = email_body
+
+			part.save
 		end
 
 		def extract_mails(to)
@@ -58,9 +64,10 @@
 			request.to = extract_mails email[:to]
 			request.from = email[:from]
 			request.desk_id = find_desk(extract_mails email[:to])
+			request.user_id = find_user(request.desk_id)
 
 			request.save
 
-			append_to_request(request.id, email[:body])
+			create_part(request.id, request.user_id, email[:body])
 		end
 	end
