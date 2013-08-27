@@ -9,6 +9,7 @@ gem 'turbolinks'
 gem 'bcrypt-ruby', require: 'bcrypt'
 gem 'griddler'
 gem 'jquery-rails'
+gem 'time_diff'
 
 group :development do
 	gem 'annotate'

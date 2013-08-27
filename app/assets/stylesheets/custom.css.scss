@@ -28,11 +28,27 @@
 }
 
 #desk-tabs {
+	
 	margin-top: 10px;
+	a{
+		color: black;
+	}
+	a:hover {
+			text-decoration: underline;
+	}
 	ul {
 		float: none;
 	}
 	.li-pull-right {
 		float: right;
+	}
+	.new-desk {
+		color: green;
+	}
+}
+
+table {
+	.hover-row:hover{
+		background: lightGray;
 	}
 }

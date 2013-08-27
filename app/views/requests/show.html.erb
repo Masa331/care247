@@ -3,6 +3,7 @@
 		<th>Předmět</th>
 		<th>Číslo ticketu</th>
 		<th>Odesílatel</th>
+		<th>Status</th>
 		<th>Přijato - Doba od přijetí</th>
 	</tr>
 
@@ -10,13 +11,30 @@
 		<td><%= @request.subject %></td>
 		<td><%= @request.id %></td>
 		<td><%= @request.from %></td>
-		<td><%= @request.created_at.to_formatted_s :czech_time_date %>  <%= (Time.zone.now - @request.created_at).to_formatted_s :czech_time_date %></td>
+		<td><%= @request.status_flag %></td>
+		<td><%= @request.created_at.to_formatted_s :czech_time_date %> | <%= time_difference @request.created_at %></td>
 	</tr>
 </table>
+<%= link_to "Vyřídit", "#", class: "btn btn-success" %>
+<%= link_to "Upozornit šéfa", "#", class: "btn btn-info" %>
+<%= link_to "Smazat", "#", class: "btn btn-danger" %>
 
+<div class="row">
+	<div class="span12">
+		<h4 class="bottom-bordered">Odpověď na ticket</h4>
+		<%= form_tag "#" do %>
+			<%= text_area_tag :body, nil, class: "span12", rows: 10 %>
+			<br>
+			<%= submit_tag "Odeslat a vyřídit", class: "btn btn-success" %>
+			<%= submit_tag "Odeslat", class: "btn btn-success" %>
+		<% end %>
+	</div>
+</div>
+
+<h4 class="bottom-bordered">Historie komunikace</h4>
 <% settle_parts(@parts).each do |p| %>
 	<br>
-	<%= p.created_at %>
+	<strong>Přijato <%= p.created_at.to_formatted_s(:czech_time_date) %></strong>
 	<br>
 	<%= p.body %>	
 <% end %>

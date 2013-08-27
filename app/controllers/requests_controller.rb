@@ -1,5 +1,7 @@
 # encoding: UTF-8
 
+require 'time_diff'
+
 class RequestsController < ApplicationController
 
 	layout "signed_in"

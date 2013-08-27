@@ -5,7 +5,7 @@
 			<% current_users_desks.each do |d| %>
 				<li><%= link_to d.name, desk_url(d) %></li>
 			<% end %>
-			<li class="li-pull-right"><%= link_to "Zalozit novou podporu", new_user_desk_url(current_user.id) %></li>
+			<li class="li-pull-right"><%= link_to "Zalozit novou podporu", new_user_desk_url(current_user.id), class: "new-desk" %></li>
 		</ul>
 	</div>
 </div>
