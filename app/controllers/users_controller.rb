@@ -12,6 +12,9 @@ class UsersController < ApplicationController
 	def create
 		@user = User.new(params[:user].permit(:name, :email, :password))
 		if @user.save
+			
+			MyMailer.welcome_email(@user).deliver
+
 			redirect_to @user
 			flash[:success] = "Byl jste uspesne zaregistrovan"
 			# session things
@@ -24,7 +27,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		# I'm using "find_by_id" beause simple "find" it returns error RecordNotFound and doesn't execute the if-else when queriing qith non-existant id 
+		# I'm using "find_by_id" beause simple "find" returns error RecordNotFound and doesn't execute the if-else when queriing qith non-existant id 
 		if @user = User.find_by_id(params[:id])
 			@desks = @user.desks.all
 			render :show

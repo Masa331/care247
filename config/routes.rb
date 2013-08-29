@@ -23,4 +23,5 @@ Care247::Application.routes.draw do
     get "/edit_desk/:id", to: "desks#edit", as: :edit_desk
 
     match "/signout", to: "sessions#destroy", via: :delete
+    match "/answer_request/:id", to: "requests#answer_request", via: :post, as: :answer_request
 end

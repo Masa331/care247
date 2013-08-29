@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 require 'time_diff'
 
 class RequestsController < ApplicationController
@@ -7,7 +5,7 @@ class RequestsController < ApplicationController
 	layout "signed_in"
 
 	before_filter :signed_in_user
-    before_filter :correct_user, only: [:update, :destroy, :show]
+    before_filter :correct_user, only: [:update, :destroy, :show, :answer_request]
 
 	def show
 		@request = Request.find(params[:id])
@@ -29,6 +27,14 @@ class RequestsController < ApplicationController
 			flash[:error] = "Neco se pokazilo"
 			redirect_to desk_url(@request.desk_id)
 		end
+	end
+
+	def answer_request
+		@request = Request.find(params[:id])
+		Part.create(body: params[:body], request_id: @request.id, user_id: current_user.id)
+		MyMailer.answer_request_email(@request.from, @request.desk.desks_mailbox, @request.subject, params[:body]).deliver
+		@request.update_attributes(status_flag: 1)
+		redirect_to desk_url(@request.desk_id)
 	end
 
 	def destroy

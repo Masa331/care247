@@ -23,6 +23,28 @@ describe UsersController do
 				post :create, user: FactoryGirl.attributes_for(:whitelist) 
 				response.should redirect_to User.last
 			end
+			describe "sends welcome_email" do
+				let(:email) do
+					post :create, user: FactoryGirl.attributes_for(:whitelist, email: "bozena@seznam.cz")
+					ActionMailer::Base.deliveries.last
+				end
+				it "creates new email in deliveries array" do
+					expect{post :create, user: FactoryGirl.attributes_for(:whitelist)}.to change(ActionMailer::Base.deliveries, :count).by 1
+				end
+				it "has right recipient" do
+					email.to.should eq ["bozena@seznam.cz"]
+				end
+				it "has right from" do
+					email.from.should eq ["info@care247.cz"]
+				end
+				it "has right subject" do
+					email.subject.should eq "Welcome to Care247"
+				end
+
+				it "has right body" do
+					email.body.encoded.should have_text "Welcome to Care247"
+				end
+			end
 		end
 
 		context "with invalid input" do

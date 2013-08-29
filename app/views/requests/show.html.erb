@@ -22,7 +22,7 @@
 <div class="row">
 	<div class="span12">
 		<h4 class="bottom-bordered">Odpověď na ticket</h4>
-		<%= form_tag "#" do %>
+		<%= form_tag answer_request_path, id: @request.id do %>
 			<%= text_area_tag :body, nil, class: "span12", rows: 10 %>
 			<br>
 			<%= submit_tag "Odeslat a vyřídit", class: "btn btn-success" %>
