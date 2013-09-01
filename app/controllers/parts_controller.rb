@@ -1,5 +1,5 @@
 class PartsController < ApplicationController
 
-	layout "signed_in"
+	layout "backend"
 
 end

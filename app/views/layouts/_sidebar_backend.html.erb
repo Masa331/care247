@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <ul id="nav">
+	  <li>
+	  	<%= link_to requests_path do %>
+	    	<i class="icon-list-alt"></i> Vsechny tickety
+	    <% end %>
+  	</li> 
+	  <% current_users_desks.each do |d| %>
+			<li>
+		  	<%= link_to desk_path(d) do %>
+		    	<span><%= d.name %></span>
+		    <% end %>
+  		</li>
+		<% end %>
+		<li>
+		  	<%= link_to new_user_desk_url(current_user.id) do %>
+		    	<span>Zalozit podporu</span>
+		    <% end %>
+		</li>
+    <li>
+	  	<%= link_to user_path(current_user) do %>
+	    	<i class="icon-wrench"></i> Nastaveni uctu
+	    <% end %>
+  	</li>
+  	<li>
+	  	<%= link_to signout_path, method: "delete" do %>
+	    	<i class="icon-off"></i> Odhlasit
+	    <% end %>
+  	</li>
+  </ul>
+</div>

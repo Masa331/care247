@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+
+	layout "session"
+
 	def new
 	end
 
@@ -6,7 +9,7 @@ class SessionsController < ApplicationController
 		user = User.authenticate(params[:email],params[:password])
 		if user
 			sign_in user
-			redirect_to root_url
+			redirect_to user_path user
 		else
 			flash[:error] = "Prihlaseni se nezdarilo"
 			render :new

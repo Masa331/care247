@@ -2,7 +2,7 @@ require 'time_diff'
 
 class RequestsController < ApplicationController
 
-	layout "signed_in"
+	layout "backend"
 
 	before_filter :signed_in_user
     before_filter :correct_user, only: [:update, :destroy, :show, :answer_request]

@@ -1,8 +1,36 @@
-<h1>Prihlaste se</h1>
-<%= form_tag sessions_path do %>
-	<p>Email</p>
-	<%= text_field_tag :email %>
-	<p>Heslo</p>
-	<%= text_field_tag :password %>
-	<%= submit_tag "Prihlasit se", class: "btn" %>
-<% end %>
+<div class="widget">
+              <!-- Widget head -->
+              <div class="widget-head">
+                <i class="icon-lock"></i> Login 
+              </div>
+
+              <div class="widget-content">
+                <div class="padd">
+                  <!-- Login form -->
+
+                  <%= form_tag sessions_path, class: "form-horizontal" do %>
+									<div class="control-group">
+                      <label class="control-label" for="inputEmail">Email</label>
+                      <div class="controls">
+												<%= text_field_tag :email, nil, id: "inputEmail", placeholder: "Email" %>
+                      </div>
+                    </div>
+										<div class="control-group">
+                      <label class="control-label" for="inputPassword">Password</label>
+                      <div class="controls">
+												<%= text_field_tag :password, nil, id: "inputPassword", placeholder: "Password" %>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <div class="controls">
+												<%= submit_tag "Prihlasit se", class: "btn" %>
+                      </div>
+                    </div>
+								<% end %>	
+
+                </div>
+                <div class="widget-foot">
+                  <!-- Footer goes here -->
+                </div>
+              </div>
+            </div>  

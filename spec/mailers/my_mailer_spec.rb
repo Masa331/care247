@@ -40,7 +40,7 @@ describe MyMailer do
 		end
 		describe "with right attributes for" do
 			let(:email) do
-				MyMailer.answer_request_email("petr@seznam.cz", "testovaci@podpora.cz", "testovaci predmet", "toto je v body").deliver
+				MyMailer.answer_request_email("petr@seznam.cz	", "testovaci@podpora.cz", "testovaci predmet", "toto je v body").deliver
 				ActionMailer::Base.deliveries.last
 			end
 			it "subject" do

@@ -5,11 +5,12 @@
 
 	<!-- Importing Twitter Bootstrap and jQuery from CDN's for faster page loading -->
 
-	<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
 	<%= stylesheet_link_tag "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap.no-responsive.no-icons.min.css" %>
 
 	<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 	<%= javascript_include_tag "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"%>
+	<%= stylesheet_link_tag "custom", media: "all", "data-turbolinks-track" => true %>
+	
 
 	<%= csrf_meta_tags %>
 </head>

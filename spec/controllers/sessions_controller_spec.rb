@@ -23,7 +23,7 @@ describe SessionsController do
 				current_user.should eq(@user)
 			end
 			it "redirects to root_url" do
-				response.should redirect_to root_url
+				response.should redirect_to user_url(@user)
 			end
 		end
 
